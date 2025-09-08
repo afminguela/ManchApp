@@ -21,10 +21,12 @@ classDiagram
         -boolean lavableMaquina
         -String cuidadosEspeciales
         -int temperaturaMaxima
+        -boolean permeabilidad
         +getTipoFibra() String
         +isLavableMaquina() boolean
         +getCuidadosEspeciales() String
         +getTemperaturaMaxima() int
+        -isPermeabilidad() boolean
     }
     class Superficie {
         -String tipoSuperficie
@@ -42,16 +44,20 @@ classDiagram
         -Long id
         -String nombre
         -String descripcion
+        -String tipoSustancia
+        -String color
+        -boolean toxico
+        -Nivel peligrosidad
         -LocalDateTime fechaCreacion
         +getId() Long
         +getNombre() String
         +getDescripcion() String
     }
     class TipoMancha {
-        -String categoria
-        -String origen
-        -String dificultad
-        -String color
+        -String categoriaMancha
+        -String origenMancha
+        -String dificultadLimpieza
+        -boolean seFijaConCalor
         -boolean urgente
         +getCategoria() String
         +getDificultad() String
@@ -60,6 +66,10 @@ classDiagram
     class Ingrediente {
         -String tipoIngrediente
         -String propiedades
+        -double phIngrediente
+        -boolean disponibleSupermercado
+        +getPhIngrediente() double
+
         +getTipoIngrediente() String
         +getPropiedades() String
     }
