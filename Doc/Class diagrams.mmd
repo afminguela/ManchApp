@@ -1,5 +1,8 @@
+---
+config:
+  layout: dagre
+---
 classDiagram
-    %% PRIMERA HERENCIA - Sustancia como clase padre
     class Sustancia {
         <<abstract>>
         -Long id
@@ -17,7 +20,6 @@ classDiagram
         +isToxico() boolean
         +isNatural() boolean
     }
-
     class TipoMancha {
         -String categoriaMancha
         -String origen
@@ -33,7 +35,6 @@ classDiagram
         +isSeFijaConCalor() boolean
         +getNumeroSolucionesDisponibles() int
     }
-
     class Ingrediente {
         -String tipoIngrediente
         -BigDecimal phValor
@@ -51,8 +52,6 @@ classDiagram
         +isDisponibleSupermercado() boolean
         +isRequiereVentilacion() boolean
     }
-
-    %% SEGUNDA HERENCIA - Material como clase padre
     class Material {
         <<abstract>>
         -Long id
@@ -66,7 +65,6 @@ classDiagram
         +isDelicado() boolean
         +getNumeroSolucionesDisponibles() int
     }
-
     class Tela {
         -String tipoFibra
         -boolean lavableMaquina
@@ -79,7 +77,6 @@ classDiagram
         +getTemperaturaMaxima() int
         +isSecadoAire() boolean
     }
-
     class Superficie {
         -String tipoSuperficie
         -boolean resistenteAgua
@@ -90,8 +87,6 @@ classDiagram
         +getAcabado() String
         +isPoroso() boolean
     }
-
-    %% Entidad principal de soluciones MEJORADA
     class SolucionLimpieza {
         -Long id
         -String titulo
@@ -116,8 +111,6 @@ classDiagram
         +esCompatibleConCombinacion() boolean
         +getNivelRiesgoGeneral() PeligrosidadNivel
     }
-
-    %% Entidad de usuarios (para autenticación)
     class Usuario {
         -Long id
         -String username
@@ -132,8 +125,6 @@ classDiagram
         +getEmail() String
         +isActivo() boolean
     }
-
-    %% Entidad de favoritos del usuario
     class SolucionFavorita {
         -Long id
         -String notas
@@ -145,8 +136,6 @@ classDiagram
         +isProbado() boolean
         +getValoracion() Integer
     }
-
-    %% Entidad de categorías para mejor organización
     class Categoria {
         -Long id
         -String nombre
@@ -157,33 +146,10 @@ classDiagram
         +getNombre() String
         +getIcono() String
     }
-
-    %% RELACIONES DE HERENCIA
     Sustancia <|-- TipoMancha
     Sustancia <|-- Ingrediente
     Material <|-- Tela
     Material <|-- Superficie
-
-    %% ============ NUEVAS RELACIONES MUCHOS A MUCHOS ============
-    
-    %% Una solución puede servir para múltiples tipos de mancha
-    SolucionLimpieza }|--|| TipoMancha : "solucion_tipos_mancha"
-    
-    %% Una solución puede aplicarse en múltiples materiales  
-    SolucionLimpieza }|--|| Material : "solucion_materiales"
-    
-    %% Una solución puede contener múltiples ingredientes
-    SolucionLimpieza }|--|| Ingrediente : "solucion_ingredientes"
-    
-    %% Ingredientes incompatibles entre sí
-    Ingrediente }|--|| Ingrediente : "ingredientes_incompatibles"
-    
-    %% Relaciones restantes (1:N)
-    Usuario ||--o{ SolucionFavorita : "guarda"
-    SolucionLimpieza ||--o{ SolucionFavorita : "es guardada"
-    Categoria ||--o{ TipoMancha : "categoriza"
-
-    %% ANOTACIONES MEJORADAS
     note for Sustancia "JOINED Strategy - Padre de TipoMancha e Ingrediente"
     note for Material "JOINED Strategy - Padre de Tela y Superficie"  
     note for SolucionLimpieza "¡MEJORADO! Una solución sirve para múltiples manchas y materiales"

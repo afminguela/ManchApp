@@ -1,0 +1,27 @@
+%% Una solución puede servir para múltiples tipos de mancha (N:M)
+erDiagram
+    SolucionLimpieza ||--o{ TipoMancha : solucion_tipos_mancha
+
+    %% Una solución puede aplicarse en múltiples materiales (N:M)
+    SolucionLimpieza ||--o{ Material : solucion_materiales
+
+    %% Una solución puede contener múltiples ingredientes (N:M)
+    SolucionLimpieza ||--o{ Ingrediente : solucion_ingredientes
+
+    %% Ingredientes incompatibles entre sí (N:M)
+    Ingrediente ||--o{ Ingrediente : ingredientes_incompatibles
+
+    %% Usuario puede guardar varias soluciones favoritas (1:N)
+    Usuario ||--o{ SolucionFavorita : guarda
+
+    %% Una solución puede estar guardada varias veces (1:N)
+    SolucionLimpieza ||--o{ SolucionFavorita : es guardada
+
+    %% Una categoría puede englobar varios tipos de mancha (1:N)
+    Categoria ||--o{ TipoMancha : categoriza
+    TipoMancha ||--o{ SolucionLimpieza : "tiene soluciones"
+    Material ||--o{ SolucionLimpieza : "se aplica en"
+    SolucionLimpieza }o--o{ Ingrediente : "contiene"
+    Ingrediente }o--o{ Ingrediente : "incompatible con"
+    Usuario ||--o{ SolucionFavorita : "guarda"
+    SolucionLimpieza ||--o{ SolucionFavorita : "es guardada"
