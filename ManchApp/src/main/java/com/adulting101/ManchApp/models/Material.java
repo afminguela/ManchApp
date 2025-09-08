@@ -36,8 +36,8 @@ import java.util.List;
         @Column(nullable = false)
         private boolean delicado = false;
 
-        @Column(name = "porosidad",  )
-        private Nivel porisidad
+        @Column(name = "porosidad")
+        private Nivel porosidad;
 
         @Column(name = "fecha_creacion", nullable = false)
         private LocalDateTime fechaCreacion;

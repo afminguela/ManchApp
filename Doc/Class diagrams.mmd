@@ -3,55 +3,7 @@ config:
   layout: dagre
 ---
 classDiagram
-    class Sustancia {
-        <<abstract>>
-        -Long id
-        -String nombre
-        -String descripcion
-        -String tipoSustancia
-        -String color
-        -boolean toxico
-        -boolean natural
-        -PeligrosidadNivel peligrosidad
-        -LocalDateTime fechaCreacion
-        +getId() Long
-        +getNombre() String
-        +getDescripcion() String
-        +isToxico() boolean
-        +isNatural() boolean
-    }
-    class TipoMancha {
-        -String categoriaMancha
-        -String origen
-        -DificultadLimpieza dificultadLimpieza
-        -boolean urgente
-        -boolean seFijaConCalor
-        -Double phAproximado
-        -Integer tiempoSecadoHoras
-        +getCategoriaMancha() String
-        +getOrigen() String
-        +getDificultadLimpieza() DificultadLimpieza
-        +isUrgente() boolean
-        +isSeFijaConCalor() boolean
-        +getNumeroSolucionesDisponibles() int
-    }
-    class Ingrediente {
-        -String tipoIngrediente
-        -BigDecimal phValor
-        -BigDecimal concentracionMaxima
-        -Integer tiempoContactoMaxMinutos
-        -BigDecimal precioAproximado
-        -boolean disponibleSupermercado
-        -boolean requiereVentilacion
-        -boolean compatibleConAgua
-        -EstadoFisico estadoFisico
-        -String temperaturaAlmacenamiento
-        +getTipoIngrediente() String
-        +getPhValor() BigDecimal
-        +getEstadoFisico() EstadoFisico
-        +isDisponibleSupermercado() boolean
-        +isRequiereVentilacion() boolean
-    }
+%% Clase abstracta Material
     class Material {
         <<abstract>>
         -Long id
@@ -63,19 +15,16 @@ classDiagram
         +getNombre() String
         +getDescripcion() String
         +isDelicado() boolean
-        +getNumeroSolucionesDisponibles() int
     }
     class Tela {
         -String tipoFibra
         -boolean lavableMaquina
         -String cuidadosEspeciales
         -int temperaturaMaxima
-        -boolean secadoAire
         +getTipoFibra() String
         +isLavableMaquina() boolean
         +getCuidadosEspeciales() String
         +getTemperaturaMaxima() int
-        +isSecadoAire() boolean
     }
     class Superficie {
         -String tipoSuperficie
@@ -87,44 +36,75 @@ classDiagram
         +getAcabado() String
         +isPoroso() boolean
     }
+%% Clase abstracta Sustancia
+    class Sustancia {
+        <<abstract>>
+        -Long id
+        -String nombre
+        -String descripcion
+        -LocalDateTime fechaCreacion
+        +getId() Long
+        +getNombre() String
+        +getDescripcion() String
+    }
+    class TipoMancha {
+        -String categoria
+        -String origen
+        -String dificultad
+        -String color
+        -boolean urgente
+        +getCategoria() String
+        +getDificultad() String
+        +isUrgente() boolean
+    }
+    class Ingrediente {
+        -String tipoIngrediente
+        -String propiedades
+        +getTipoIngrediente() String
+        +getPropiedades() String
+    }
     class SolucionLimpieza {
         -Long id
         -String titulo
         -String instrucciones
         -Integer tiempoMinutos
-        -DificultadAplicacion dificultadAplicacion
+        -String dificultad
         -Integer efectividad
         -String advertencias
         -String consejos
         -boolean casero
-        -boolean requiereVentilacion
-        -boolean seguroParaNiños
-        -BigDecimal precioEstimado
         -LocalDateTime fechaCreacion
         +getId() Long
         +getTitulo() String
         +getInstrucciones() String
         +getEfectividad() Integer
         +isCasero() boolean
-        +esCompatibleConMancha() boolean
-        +esCompatibleConMaterial() boolean
-        +esCompatibleConCombinacion() boolean
-        +getNivelRiesgoGeneral() PeligrosidadNivel
     }
-    class Usuario {
+    class Persona {
         -Long id
-        -String username
-        -String email
-        -String password
         -String nombre
         -String apellidos
-        -boolean activo
-        -LocalDateTime fechaRegistro
-        +getId() Long
+        -String email
+        -String username
+        -String password
         +getUsername() String
         +getEmail() String
-        +isActivo() boolean
     }
+    class UsuarioBase {
+        -boolean activo
+        -boolean premium
+        -LocalDateTime fechaRegistro
+        +isActivo() boolean
+        +isPremium() boolean
+
+    }
+    class Administrador {
+        List<String> permisos
+        -boolean superAdmin
+        +isSuperAdmin() boolean
+        +permisosAvanzados: boolean
+    }
+
     class SolucionFavorita {
         -Long id
         -String notas
@@ -144,15 +124,26 @@ classDiagram
         -String color
         +getId() Long
         +getNombre() String
-        +getIcono() String
     }
-    Sustancia <|-- TipoMancha
-    Sustancia <|-- Ingrediente
+
+%% Herencias
     Material <|-- Tela
     Material <|-- Superficie
+    Sustancia <|-- TipoMancha
+    Sustancia <|-- Ingrediente
+    Persona <|-- UsuarioBase
+    Persona<|-- Administrador
+
+
+
+%% Notas
+    note for Material "Clase base para Tela y Superficie (JOINED)"
+    note for Sustancia "Clase abstracta común para manchas e ingredientes"
+    note for SolucionLimpieza "Incluye pasos, ingredientes y advertencias"
+    note for UsuarioBase "Jerarquía de usuarios: Usuario y Admin"
     note for Sustancia "JOINED Strategy - Padre de TipoMancha e Ingrediente"
-    note for Material "JOINED Strategy - Padre de Tela y Superficie"  
-    note for SolucionLimpieza "¡MEJORADO! Una solución sirve para múltiples manchas y materiales"
+    note for Material "JOINED Strategy - Padre de Tela y Superficie"
+    note for SolucionLimpieza "Una solución sirve para múltiples manchas y materiales"
     note for TipoMancha "Ejemplo: 'Vino Tinto' puede tener 5 soluciones diferentes"
     note for Material "Ejemplo: 'Algodón' puede tener soluciones para 10 tipos de mancha"
     note for Ingrediente "Ejemplo: 'Bicarbonato' se usa en múltiples soluciones"
