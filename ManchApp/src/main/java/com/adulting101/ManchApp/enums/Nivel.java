@@ -13,3 +13,4 @@ private String descripcion;
       this.descripcion = descripcion;
     }
 }
+ // variar el mensaje de la descrición depèndiendo de si es riesgo, dificultad.

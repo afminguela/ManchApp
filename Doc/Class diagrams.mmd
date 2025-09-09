@@ -3,13 +3,15 @@ config:
   layout: dagre
 ---
 classDiagram
-%% Clase abstracta Material
+%% Clase abstracta Material y sus subclases ( una mesa es de madera, una camiseta de tela)
     class Material {
         <<abstract>>
         -Long id
         -String nombre
         -String descripcion
         -boolean delicado
+        -Nivel porosidad
+        -list<SolucionesLimpieza> soluciones
         -LocalDateTime fechaCreacion
         +getId() Long
         +getNombre() String
@@ -22,6 +24,7 @@ classDiagram
         -String cuidadosEspeciales
         -int temperaturaMaxima
         -boolean permeabilidad
+        -boolean secadoAlAire
         +getTipoFibra() String
         +isLavableMaquina() boolean
         +getCuidadosEspeciales() String
@@ -31,14 +34,14 @@ classDiagram
     class Superficie {
         -String tipoSuperficie
         -boolean resistenteAgua
-        -String acabado
-        -boolean poroso
+        -Acabado acabado
+        -Nivel porosidad
         +getTipoSuperficie() String
         +isResistenteAgua() boolean
         +getAcabado() String
         +isPoroso() boolean
     }
-%% Clase abstracta Sustancia
+%% Clase abstracta Sustancia y sus subclases (una mancha es una sustancia que ensucia, un ingrediente es una sustancia que limpia)
     class Sustancia {
         <<abstract>>
         -Long id
@@ -47,7 +50,10 @@ classDiagram
         -String tipoSustancia
         -String color
         -boolean toxico
+        -boolean natural
         -Nivel peligrosidad
+        -Long phSustancia
+        -list<Precauciones> precauciones
         -LocalDateTime fechaCreacion
         +getId() Long
         +getNombre() String
@@ -56,9 +62,10 @@ classDiagram
     class TipoMancha {
         -String categoriaMancha
         -String origenMancha
-        -String dificultadLimpieza
+        -Nivel dificultadLimpieza
         -boolean seFijaConCalor
         -boolean urgente
+        -double tiempoSecadoHoras
         +getCategoria() String
         +getDificultad() String
         +isUrgente() boolean
@@ -66,23 +73,41 @@ classDiagram
     class Ingrediente {
         -String tipoIngrediente
         -String propiedades
-        -double phIngrediente
         -boolean disponibleSupermercado
+        +isDisponibleSupermercado() boolean
+        +getPrecauciones() String
         +getPhIngrediente() double
-
         +getTipoIngrediente() String
         +getPropiedades() String
     }
+
+    class Utensilio {
+        -Long id
+        -String nombre
+        -String descripcion
+        -boolean reutilizable
+        -boolean desechable
+        -String material
+        -String tamaño
+        +getId() Long
+        +getNombre() String
+        +isReutilizable() boolean
+        +isDesechable() boolean
+    }
+
+%% Clase principal SolucionLimpieza (una solucion de limpieza tiene ingredientes, trata manchas y es para
+%% materiales, tiene instrucciones, efectividad, dificultad, consejos y advertencias)
     class SolucionLimpieza {
         -Long id
         -String titulo
         -String instrucciones
         -Integer tiempoMinutos
-        -String dificultad
+        -Nivel dificultad
         -Integer efectividad
-        -String advertencias
+        -Precauciones advertencias
         -String consejos
         -boolean casero
+        -Categoria categoria
         -LocalDateTime fechaCreacion
         +getId() Long
         +getTitulo() String
@@ -90,29 +115,13 @@ classDiagram
         +getEfectividad() Integer
         +isCasero() boolean
     }
-    class Persona {
-        -Long id
-        -String nombre
-        -String apellidos
-        -String email
-        -String username
-        -String password
-        +getUsername() String
-        +getEmail() String
-    }
-    class UsuarioBase {
-        -boolean activo
-        -boolean premium
-        -LocalDateTime fechaRegistro
-        +isActivo() boolean
-        +isPremium() boolean
 
-    }
-    class Administrador {
-        List<String> permisos
-        -boolean superAdmin
-        +isSuperAdmin() boolean
-        +permisosAvanzados: boolean
+    class Precauciones {
+        -Long id
+        -String descripcion
+        -Sustancia sustancia;
+        +getDescripcion() String
+        +getNivelRiesgo() String
     }
 
     class SolucionFavorita {
@@ -136,24 +145,92 @@ classDiagram
         +getNombre() String
     }
 
+    class Enum_Nivel {
+        NONE
+        LOW
+        MEDIUM
+        HIGH
+        CRITICAL
+    }
+
+    class Enum_Acabado {
+        MATE
+        BRILLANTE
+        SATINADO
+        TEXTURIZADO
+    }
+
+%% Clase abstracta Persona
+    class Persona {
+        -Long id
+        -String nombre
+        -String apellidos
+        -String email
+        -String username
+        -String password
+        +getUsername() String
+        +getEmail() String
+    }
+    class UsuarioBase {
+        -boolean activo
+        -boolean premium
+        -List<Categoria> categoriasPreferidas
+        -List<SolucionFavorita> solucionesGuardadas
+        -LocalDateTime fechaRegistro
+        +isActivo() boolean
+        +isPremium() boolean
+    }
+    class Administrador {
+        List<String> permisos
+        -boolean superAdmin
+        +isSuperAdmin() boolean
+        +permisosAvanzados: boolean
+    }
+
+    class Permisos {
+        -String nombre
+        -String descripcion
+        +getNombre() String
+    }
+
 %% Herencias
     Material <|-- Tela
     Material <|-- Superficie
     Sustancia <|-- TipoMancha
     Sustancia <|-- Ingrediente
     Persona <|-- UsuarioBase
-    Persona<|-- Administrador
+    Persona <|-- Administrador
+%% Relaciones Negocio
+SolucionLimpieza o-- "1..*" Ingrediente: incluye
+SolucionLimpieza o-- "1..*" TipoMancha: trata
+SolucionLimpieza o-- "1..*" Material: para
+SolucionLimpieza o-- "0..*" Precauciones: tiene advertencias
+Sustancia o-- "0..*" Precauciones: tiene
+SolucionFavorita o-- "1" SolucionLimpieza: referencia
 
+
+%% Relaciones Usuario
+UsuarioBase o-- "0..*" Categoria: pertenece
+UsuarioBase o-- "0..*" SolucionFavorita: guarda
+UsuarioBase o-- "1" Persona: extiende
+
+%% Relaciones Administrador
+Administrador o-- "1" Persona: extiende
+Administrador o-- "0..*" Categoria: gestiona
+Administrador o-- "0..*" SolucionLimpieza: gestiona
+Administrador o-- "0..*" Sustancia: gestiona
+Administrador o-- "0..*" Material: gestiona
 
 
 %% Notas
-    note for Material "Clase base para Tela y Superficie (JOINED)"
-    note for Sustancia "Clase abstracta común para manchas e ingredientes"
-    note for SolucionLimpieza "Incluye pasos, ingredientes y advertencias"
-    note for UsuarioBase "Jerarquía de usuarios: Usuario y Admin"
-    note for Sustancia "JOINED Strategy - Padre de TipoMancha e Ingrediente"
-    note for Material "JOINED Strategy - Padre de Tela y Superficie"
-    note for SolucionLimpieza "Una solución sirve para múltiples manchas y materiales"
-    note for TipoMancha "Ejemplo: 'Vino Tinto' puede tener 5 soluciones diferentes"
-    note for Material "Ejemplo: 'Algodón' puede tener soluciones para 10 tipos de mancha"
-    note for Ingrediente "Ejemplo: 'Bicarbonato' se usa en múltiples soluciones"
+note for Material "Clase base para Tela y Superficie (JOINED)"
+note for Sustancia "Clase abstracta común para manchas e ingredientes"
+note for SolucionLimpieza "Incluye pasos, ingredientes y advertencias"
+note for UsuarioBase "Jerarquía de usuarios: Usuario y Admin"
+note for Sustancia "JOINED Strategy - Padre de TipoMancha e Ingrediente"
+note for Material "JOINED Strategy - Padre de Tela y Superficie"
+note for SolucionLimpieza "Una solución sirve para múltiples manchas y materiales"
+note for TipoMancha "Ejemplo: 'Vino Tinto' puede tener 5 soluciones diferentes"
+note for Material "Ejemplo: 'Algodón' puede tener soluciones para 10 tipos de mancha"
+note for Ingrediente "Ejemplo: 'Bicarbonato' se usa en múltiples soluciones"
+note for Precaudiones "lista de Precauciones para cada sustancia, Ejemplo: 'No mezclar con lejía'"

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,14 +37,16 @@ import java.util.List;
         @Column(nullable = false)
         private boolean delicado = false;
 
-        @Column(name = "porosidad")
-        private Nivel porosidad;
+
+        @Enumerated(EnumType.STRING)
+        @Column(name = "porosidad",  nullable = true)
+        private Nivel porosidad = Nivel.MEDIUM;
 
         @Column(name = "fecha_creacion", nullable = false)
         private LocalDateTime fechaCreacion;
 
 
-        @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
         private List<SolucionLimpieza> soluciones;
 
         @PrePersist

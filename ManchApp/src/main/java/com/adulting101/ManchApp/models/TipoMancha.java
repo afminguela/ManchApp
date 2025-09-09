@@ -1,9 +1,8 @@
 package com.adulting101.ManchApp.models;
 
 import com.adulting101.ManchApp.enums.Nivel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,19 +30,16 @@ public class TipoMancha extends Sustancia {
 
 
     @Column(nullable = false, name = "dificultad_limpieza")
+    @Enumerated(EnumType.STRING)
     public Nivel dificultadLimpieza;
 
     @NotBlank(message = "El tipo no puede estar en blanco")
     @Column( name = "urgente")
     public boolean urgente;
 
-
     @Column( name = "se_fija_con_calor")
     public boolean seFijaConCalor;
 
-
-    @Column(name = "Ph_Aprox")
-    public double phAproximado;
 
     @Min(value = 0, message = "El valor minimo es 0")
     @Column(name = "tiempo_secado")
