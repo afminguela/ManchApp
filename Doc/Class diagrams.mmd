@@ -205,6 +205,7 @@ classDiagram
     Persona <|-- Administrador
 %% Relaciones Negocio
 SolucionLimpieza o-- "1..*" Ingrediente: incluye
+SolucionLimpieza o-- "0..*" Utensilio: usa
 SolucionLimpieza o-- "1..*" TipoMancha: trata
 SolucionLimpieza o-- "1..*" Material: para
 SolucionLimpieza o-- "0..*" Precauciones: tiene advertencias

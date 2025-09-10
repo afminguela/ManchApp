@@ -2,13 +2,18 @@ package com.adulting101.ManchApp.models;
 
 import com.adulting101.ManchApp.enums.Nivel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 
-    @Entity
+@Entity
     @Table(name="Soluciones_Limpieza")
     @Data
     @NoArgsConstructor
@@ -16,57 +21,54 @@ import lombok.NoArgsConstructor;
     @Builder
     public class SolucionLimpieza {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-       
-        @NotNull(message = "El titulo es obligatorio")
-        @Column(name="titulo")
-        private String titulo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @NotNull(message = "Las instrucciones se han de consignar")
-        @Column(name="instrucciones")
-        private String instrucciones;
+    @NotNull(message = "El titulo es obligatorio")
+    @Column(name = "titulo")
+    private String titulo;
 
-        @Min (value = 1, message =" el tiempo minimo es un minuto")
-        private Integer tiempoMinutos;
+    @NotBlank(message = "Las instrucciones se han de consignar")
+    @Column(name = "instrucciones")
+    private String instrucciones;
+
+    @Min(value = 1, message = " el tiempo minimo es un minuto")
+    @Column
+    private Integer tiempoMinutos;
 
 
-        @Enumerated(EnumType.STRING)
-        @Column(name ="dificultad")
-        private Nivel dificultad;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dificultad")
+    private Nivel dificultad;
 
-        @Column(name ="efectividad")
-        private Nivel efectividad;
+    @Column(name = "efectividad")
+    private Nivel efectividad;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private Precauciones advertencias;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Precauciones advertencias;
 
-        private String consejos;
+    private String consejos;
 
-        private String categoria;
+    private String categoria;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private List<Material> material;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "solucion_material",
+            joinColumns = @JoinColumn(name = "solucion_id"),
+            inverseJoinColumns = @JoinColumn(name = "material_id")
+    )
+    private List<Material> materiales;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private List<TipoMancha> mancha;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "solucion_mancha",
+            joinColumns = @JoinColumn(name = "solucion_id"),
+            inverseJoinColumns = @JoinColumn(name = "mancha_id")
+    )
+    private List<TipoMancha> manchas;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private List<Utensilio> utensilios
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Utensilio> utensilios;
 
-        -Long id
-        -String titulo
-        -String instrucciones
-        -Integer tiempoMinutos
-        -Nivel dificultad
-        -Integer efectividad
-        -Precauciones advertencias
-        -String consejos
-        -boolean casero
-        -List<Utensilio> utensilios
-        -List<Ingrediente> ingredientes
-        -List<TipoMancha> manchas
-        -Categoria categoria
-        -LocalDateTime fechaCreacion
 }

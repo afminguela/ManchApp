@@ -46,8 +46,6 @@ import java.util.List;
         private LocalDateTime fechaCreacion;
 
 
-        @OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
-        private List<SolucionLimpieza> soluciones;
 
         @PrePersist
         protected void onCreate() {
