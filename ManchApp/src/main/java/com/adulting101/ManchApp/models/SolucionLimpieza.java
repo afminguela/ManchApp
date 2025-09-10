@@ -1,5 +1,6 @@
 package com.adulting101.ManchApp.models;
 
+import com.adulting101.ManchApp.enums.Categoria;
 import com.adulting101.ManchApp.enums.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -50,7 +51,7 @@ import java.util.List;
 
     private String consejos;
 
-    private String categoria;
+    private Categoria categoria;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

@@ -1,5 +1,6 @@
 package com.adulting101.ManchApp.models;
 
+import com.adulting101.ManchApp.enums.Categoria;
 import com.adulting101.ManchApp.enums.Nivel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -22,7 +23,7 @@ import java.security.PublicKey;
 public class TipoMancha extends Sustancia {
     @NotBlank(message = "La categoria no puede estar en blanco")
     @Column(nullable = false, name = " categoria_mancha")
-    public String CategoriaMancha;
+    public Categoria CategoriaMancha;
 
     @NotBlank(message = "El origen no puede estar en blanco")
     @Column(nullable = false, name = "origen_mancha")

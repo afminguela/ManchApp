@@ -138,14 +138,8 @@ classDiagram
         +isProbado() boolean
         +getValoracion() Integer
     }
-    class Categoria {
-        -Long id
-        -String nombre
-        -String descripcion
-        -String icono
-        -String color
-        +getId() Long
-        +getNombre() String
+    class enum Categoria {
+
     }
 
     class Enum_Nivel {
@@ -162,7 +156,7 @@ classDiagram
         SATINADO
         TEXTURIZADO
     }
-
+--------------------------------------------
 %% Clase abstracta Persona
     class Persona {
         -Long id
@@ -212,7 +206,7 @@ SolucionLimpieza o-- "0..*" Precauciones: tiene advertencias
 Sustancia o-- "0..*" Precauciones: tiene
 SolucionFavorita o-- "1" SolucionLimpieza: referencia
 
-
+--------------------------------------------------------------
 %% Relaciones Usuario
 UsuarioBase o-- "0..*" Categoria: pertenece
 UsuarioBase o-- "0..*" SolucionFavorita: guarda
