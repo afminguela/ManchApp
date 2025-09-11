@@ -2,6 +2,7 @@ package com.adulting101.ManchApp.models;
 
 import com.adulting101.ManchApp.enums.Categoria;
 import com.adulting101.ManchApp.enums.Nivel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,16 +12,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
-    @Table(name="Soluciones_Limpieza")
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public class SolucionLimpieza {
+@Table(name = "Soluciones_Limpieza")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SolucionLimpieza {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,14 +49,20 @@ import java.util.List;
     @Column(name = "efectividad")
     private Nivel efectividad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Precauciones advertencias;
+
+    @ManyToMany
+    @JoinTable(
+            name = "solucion_precauciones",
+            joinColumns = @JoinColumn(name = "solucion_id"),
+            inverseJoinColumns = @JoinColumn(name = "precaudiones_id")
+    )
+    private List<Precauciones> advertencias;
 
     private String consejos;
 
     private Categoria categoria;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "solucion_material",
             joinColumns = @JoinColumn(name = "solucion_id"),
@@ -69,7 +78,20 @@ import java.util.List;
     )
     private List<TipoMancha> manchas;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Utensilio> utensilios;
+    @ManyToMany
+    @JoinTable(
+            name = "soluciones_limpieza_ingredientes",
+            joinColumns = @JoinColumn(name = "ingredientes_id"),
+            inverseJoinColumns = @JoinColumn(name = "solucion_limpieza_id")
+    )
+    private List<Ingrediente> ingredientes;
 
+    @ManyToMany
+    @JoinTable(
+            name = "soluciones_limpieza_utensilios",
+            joinColumns = @JoinColumn(name = "solucion_limpieza_id"),
+            inverseJoinColumns = @JoinColumn(name = "utensilios_id")
+    )
+    @JsonManagedReference
+    private List<Utensilio> utensilios;
 }

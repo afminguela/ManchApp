@@ -1,11 +1,16 @@
 package com.adulting101.ManchApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Utensilios")
@@ -22,6 +27,10 @@ public class Utensilio {
 
     @NotBlank
     public String descripcion;
+
+    @ManyToMany(mappedBy = "utensilios")
+    @JsonBackReference
+    private List<SolucionLimpieza> solucionesLimpieza ;
 
 
 

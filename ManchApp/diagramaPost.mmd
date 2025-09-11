@@ -1,0 +1,173 @@
+---
+title: Diagrama general del proyecto ManchApp
+---
+
+classDiagram
+    class ManchAppApplication
+    class DataLoader
+    class SolucionLimpiezaController
+    class Acabado
+    class Categoria
+    class Nivel
+
+    class Ingrediente {
+        // Hereda de Sustancia
+        String tipoIngrediente
+        String propiedades
+        boolean disponibleSupermercado
+    }
+    class Material {
+        Long id
+        @NotBlank @Size(max=100) String nombre
+        @Size(max=500) String descripcion
+        boolean delicado
+        Nivel porosidad
+        LocalDateTime fechaCreacion
+    }
+    class Precauciones {
+        Long id
+        @NotBlank String descripcion
+        Sustancia sustancia
+    }
+    class SolucionFavorita {
+        Long id
+        SolucionLimpieza solucionLimpieza
+        String notas
+        LocalDateTime fechaGuardado
+        boolean probado
+        @Min(0) @Max(5) @NotNull Integer valoracion
+    }
+    class SolucionLimpieza {
+        Long id
+        @NotNull String titulo
+        @NotBlank String instrucciones
+        @Min(1) Integer tiempoMinutos
+        Nivel dificultad
+        Nivel efectividad
+        List<Precauciones> advertencias
+        String consejos
+        Categorial categoria
+        List<Ingredientes> ingredientes
+        List<TipoMancha> manchas
+        List<Material> materiales
+        List<Utensilio> utensilios
+        LocalDateTime fechaCreacion
+    }
+    class Superficie {
+        // Hereda de Material
+        @NotBlank String tipoSuperficie
+        boolean resistenteAgua
+        Acabado acabado
+        Nivel porosidad
+    }
+    class Sustancia {
+        Long id
+        @NotBlank @Size(max=100) String nombre
+        @Size(max=500) String descripcion
+        @NotBlank String tipoSustancia
+        String color
+        boolean toxico
+        boolean natural
+        Nivel peligrosidad
+    }
+    class Tela {
+        // Hereda de Material
+        @NotBlank String tipoFibra
+        boolean lavableMaquina
+        String cuidadosEspeciales
+        @Min(20) @Max(95) Integer temperaturaMaxima
+        boolean secadoAlAire
+        boolean permeabilidad
+    }
+    class TipoMancha {
+        // Hereda de Sustancia
+        @NotBlank Categoria CategoriaMancha
+        @NotBlank String origenMancha
+        Nivel dificultadLimpieza
+        @NotBlank boolean urgente
+        boolean seFijaConCalor
+        @Min(0) Double tiempoSecadoHoras
+    }
+    class Utensilio {
+        Long id
+        String nombre
+        @NotBlank String descripcion
+    }
+
+
+    %% Repositorios
+    class IngredienteRepository
+    class MaterialRepository
+    class PrecaucionesRepository
+    class SolucionFavoritaRepository
+    class SolucionLimpiezaRepository
+    class SuperficeRepository
+    class SustanciaRepository
+    class TelaRepository
+    class TipoManchaRepository
+    class UtensilioRepository
+
+    %%Servicios e interfaces
+    class SolucionLimpiezaImpl
+    class SolucionLimpiezaInterface
+
+    %% Relaciones
+    ManchAppApplication --> DataLoader
+    ManchAppApplication --> SolucionLimpiezaController
+    DataLoader --> IngredienteRepository
+    DataLoader --> MaterialRepository
+    DataLoader --> PrecaucionesRepository
+    DataLoader --> SolucionFavoritaRepository
+    DataLoader --> SolucionLimpiezaRepository
+    DataLoader --> SuperficeRepository
+    DataLoader --> SustanciaRepository
+    DataLoader --> TelaRepository
+    DataLoader --> TipoManchaRepository
+    DataLoader --> UtensilioRepository
+
+    SolucionLimpiezaController --> SolucionLimpiezaImpl
+    SolucionLimpiezaImpl --> SolucionLimpiezaInterface
+
+    SolucionLimpieza --> Ingrediente
+    SolucionLimpieza --> Precauciones
+    SolucionLimpieza --> TipoMancha
+    SolucionLimpieza --> Material
+    SolucionLimpieza --> Utensilio
+    SolucionFavorita --> SolucionLimpieza
+
+    %% Herencias
+    Ingrediente --|> Sustancia
+    Superficie --|> Material
+    Tela --|> Material
+    TipoMancha --|> Sustancia
+
+    IngredienteRepository --> Ingrediente
+    MaterialRepository --> Material
+    PrecaucionesRepository --> Precauciones
+    SolucionFavoritaRepository --> SolucionFavorita
+    SolucionLimpiezaRepository --> SolucionLimpieza
+    SuperficeRepository --> Superficie
+    SustanciaRepository --> Sustancia
+    TelaRepository --> Tela
+    TipoManchaRepository --> TipoMancha
+    UtensilioRepository --> Utensilio
+
+    SolucionLimpiezaImpl --> SolucionLimpiezaRepository
+    SolucionLimpiezaImpl --> TipoManchaRepository
+    SolucionLimpiezaImpl --> IngredienteRepository
+    SolucionLimpiezaImpl --> UtensilioRepository
+    SolucionLimpiezaImpl --> PrecaucionesRepository
+    SolucionLimpiezaImpl --> TelaRepository
+    SolucionLimpiezaImpl --> SuperficeRepository
+
+    %% Enums
+    SolucionLimpieza --> Categoria
+    SolucionLimpieza --> Nivel
+    Superficie --> Acabado
+    Superficie --> Nivel
+    TipoMancha --> Categoria
+    TipoMancha --> Nivel
+
+    %% Interfaces y servicios
+    SolucionLimpiezaImpl --> SolucionLimpiezaInterface
+

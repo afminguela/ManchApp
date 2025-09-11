@@ -21,9 +21,9 @@ public class Precauciones {
     @NotBlank(message = "La descripcion no puede estar vacía")
     private String descripcion;
 
-
     @ManyToOne
     @JoinColumn(name = "sustancia_id")
     private Sustancia sustancia;
+
 
 }

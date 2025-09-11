@@ -39,7 +39,7 @@ import java.util.List;
 
 
         @Enumerated(EnumType.STRING)
-        @Column(name = "porosidad",  nullable = true)
+        @Column(name = "porosidad")
         private Nivel porosidad = Nivel.MEDIUM;
 
         @Column(name = "fecha_creacion", nullable = false)

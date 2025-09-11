@@ -41,7 +41,7 @@ public abstract class Sustancia {
     private boolean toxico = false;
 
     @Column(nullable = false)
-    private boolean natural = true;
+    private boolean esNatural = true;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ import java.security.PublicKey;
 @NoArgsConstructor
 @Builder
 public class TipoMancha extends Sustancia {
-    @NotBlank(message = "La categoria no puede estar en blanco")
+
     @Column(nullable = false, name = " categoria_mancha")
     public Categoria CategoriaMancha;
 
@@ -34,7 +35,7 @@ public class TipoMancha extends Sustancia {
     @Enumerated(EnumType.STRING)
     public Nivel dificultadLimpieza;
 
-    @NotBlank(message = "El tipo no puede estar en blanco")
+
     @Column( name = "urgente")
     public boolean urgente;
 
