@@ -1,5 +1,7 @@
 package com.adulting101.ManchApp.controllers;
 
+import com.adulting101.ManchApp.DTO.Material.MaterialRequestDTO;
+import com.adulting101.ManchApp.DTO.tipoMancha.TipoManchaRequestDTO;
 import com.adulting101.ManchApp.models.Material;
 import com.adulting101.ManchApp.models.SolucionLimpieza;
 import com.adulting101.ManchApp.models.TipoMancha;
@@ -17,7 +19,11 @@ public class SolucionLimpiezaController {
     private SolucionLimpiezaImpl service;
 
     @GetMapping
-    public List<SolucionLimpieza> getSolucionLimpieza(TipoMancha tipoMancha, Material material) {
+    public List<SolucionLimpieza> getSolucionLimpieza(
+            @RequestParam(required = false) String nombreMancha,
+            @RequestParam(required = false) String nombreMaterial) {
+        TipoManchaRequestDTO tipoMancha = nombreMancha != null ? new TipoManchaRequestDTO(nombreMancha) : null;
+        MaterialRequestDTO material = nombreMaterial != null ? new MaterialRequestDTO(nombreMaterial) : null;
         return service.listaSolucionLimpieza(tipoMancha, material);
     }
     @GetMapping("/{id}")

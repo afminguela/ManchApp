@@ -1,0 +1,15 @@
+package com.adulting101.ManchApp.DTO.Material;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MaterialRequestDTO {
+
+    private String nombre;
+
+
+}

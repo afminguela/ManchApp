@@ -1,5 +1,7 @@
 package com.adulting101.ManchApp.services.impl;
 
+import com.adulting101.ManchApp.DTO.Material.MaterialRequestDTO;
+import com.adulting101.ManchApp.DTO.tipoMancha.TipoManchaRequestDTO;
 import com.adulting101.ManchApp.models.Material;
 import com.adulting101.ManchApp.models.SolucionLimpieza;
 import com.adulting101.ManchApp.models.TipoMancha;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class SolucionLimpiezaImpl implements SolucionLimpiezaInterface {
 
@@ -17,9 +20,11 @@ public class SolucionLimpiezaImpl implements SolucionLimpiezaInterface {
     private SolucionLimpiezaRepository solucionLimpiezaRepository;
 
     @Override
-    public List<SolucionLimpieza> listaSolucionLimpieza(TipoMancha tipoMancha, Material material) {
+    public List<SolucionLimpieza> listaSolucionLimpieza(TipoManchaRequestDTO tipoMancha, MaterialRequestDTO material) {
+        String nombreMancha = tipoMancha.getNombre();
+        String nombreMaterial = material.getNombre();
 
-        return solucionLimpiezaRepository.findAllByManchasAndMateriales(tipoMancha,material)  ;
+        return solucionLimpiezaRepository.findAllByManchasNombreAndMaterialesNombre(nombreMancha, nombreMaterial);
     }
 
     @Override
@@ -44,7 +49,6 @@ public class SolucionLimpiezaImpl implements SolucionLimpiezaInterface {
     }
 
 
-
     @Override
     public SolucionLimpieza update(Long id, SolucionLimpieza solucionLimpieza) {
         SolucionLimpieza solucionUpdated = solucionLimpiezaRepository.findById(id).orElseThrow(() ->
@@ -64,17 +68,6 @@ public class SolucionLimpiezaImpl implements SolucionLimpiezaInterface {
         solucionLimpiezaRepository.save(solucionUpdated);
         return solucionUpdated;
     }
-
-
-//    // metodo de mapeo (darle una vuelta)
-//    private ResponseDTO mapToResponseDTO(Usuario usuario) {
-//        ResponseDTO dto = new ResponseDTO();
-//        dto.setId(usuario.getId());
-//        dto.setNombre(usuario.getNombre());
-//        dto.setEmail(usuario.getEmail());
-//        dto.setCiudad(usuario.getCiudad());
-//        return dto;
-//    }
 
 
 }
