@@ -32,7 +32,7 @@ public class SolucionLimpiezaController {
     }
 
     @PostMapping
-    public SolucionLimpieza create(SolucionLimpieza solucionLimpieza) {
+    public SolucionLimpieza create(@RequestBody SolucionLimpieza solucionLimpieza) {
         return service.create(solucionLimpieza);
     }
 

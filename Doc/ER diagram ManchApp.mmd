@@ -1,20 +1,27 @@
-
-    erDiagram
-    SolucionLimpieza ||--o{ TipoMancha : solucion_tipos_mancha
-    SolucionLimpieza ||--o{ Material : solucion_materiales
-    SolucionLimpieza ||--o{ Ingrediente : solucion_ingredientes
-    Ingrediente ||--o{ Ingrediente : ingredientes_incompatibles
-    Usuario ||--o{ SolucionFavorita : guarda
-    SolucionLimpieza ||--o{ SolucionFavorita : es guardada
-    Categoria ||--o{ TipoMancha : categoriza
+erDiagram
+    SolucionLimpieza ||--o{ TipoMancha : "solucion_tipos_mancha"
+    SolucionLimpieza ||--o{ Material : "solucion_materiales"
+    SolucionLimpieza ||--o{ Ingrediente : "solucion_ingredientes"
+    Ingrediente ||--o{ Ingrediente : "ingredientes_incompatibles"
+    SolucionLimpieza ||--o{ SolucionFavorita : "es guardada"
+    Categoria ||--o{ TipoMancha : "categoriza"
     TipoMancha ||--o{ SolucionLimpieza : "tiene"
     SolucionLimpieza ||--o{ Ingrediente : "contiene"
     SolucionLimpieza ||--o{ Material : "aplica a"
+    SolucionFavorita }o--|| UsuarioBase : "guardada por"
     UsuarioBase ||--o{ SolucionFavorita : "guarda"
-    SolucionLimpieza ||--o{ SolucionFavorita : "es guardada"
     Categoria ||--o{ TipoMancha : "categoriza"
-    Cliente ||--o{ Pedido : "realiza"
+    Persona ||--|{ UsuarioBase : "hereda"
+    Persona ||--|{ Administrador : "hereda"
+    Administrador ||--o{ Categoria : "gestiona"
+    Administrador ||--o{ SolucionLimpieza : "gestiona"
+    Administrador ||--o{ Sustancia : "gestiona"
+    Administrador ||--o{ Material : "gestiona"
 
-    %%  una sustancia puede ser mancha e ingrediente o ser macha de una solución %%
+    %% Relaciones secundarias y futuras
     TipoMancha ||--o{ TipoMancha : "manchas secundarias"
     TipoMancha ||--o{ Ingrediente : "puede ser mancha" "0..1"
+
+    %% Notas
+    %% Las relaciones con UsuarioBase, Persona y Administrador están pendientes de implementación
+    %% El resto de relaciones reflejan la estructura actual del proyecto

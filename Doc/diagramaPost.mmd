@@ -46,8 +46,8 @@ classDiagram
         Nivel efectividad
         List<Precauciones> advertencias
         String consejos
-        Categorial categoria
-        List<Ingredientes> ingredientes
+        Categoria categoria
+        List<Ingrediente> ingredientes
         List<TipoMancha> manchas
         List<Material> materiales
         List<Utensilio> utensilios
@@ -136,10 +136,12 @@ classDiagram
     SolucionFavorita --> SolucionLimpieza
 
     %% Herencias
-    Ingrediente --|> Sustancia
-    Superficie --|> Material
-    Tela --|> Material
-    TipoMancha --|> Sustancia
+    Material <|-- Tela
+    Material <|-- Superficie
+    Sustancia <|-- TipoMancha
+    Sustancia <|-- Ingrediente
+    Persona <|-- UsuarioBase
+    Persona <|-- Administrador
 
     IngredienteRepository --> Ingrediente
     MaterialRepository --> Material
@@ -171,3 +173,40 @@ classDiagram
     %% Interfaces y servicios
     SolucionLimpiezaImpl --> SolucionLimpiezaInterface
 
+
+
+%% Relaciones Negocio
+SolucionLimpieza o-- "1..*" Ingrediente: incluye
+SolucionLimpieza o-- "0..*" Utensilio: usa
+SolucionLimpieza o-- "1..*" TipoMancha: trata
+SolucionLimpieza o-- "1..*" Material: para
+SolucionLimpieza o-- "0..*" Precauciones: tiene advertencias
+Sustancia o-- "0..*" Precauciones: tiene
+SolucionFavorita o-- "1" SolucionLimpieza: referencia
+
+--------------------------------------------------------------
+%% Relaciones Usuario
+UsuarioBase o-- "0..*" Categoria: pertenece
+UsuarioBase o-- "0..*" SolucionFavorita: guarda
+UsuarioBase o-- "1" Persona: extiende
+
+%% Relaciones Administrador
+Administrador o-- "1" Persona: extiende
+Administrador o-- "0..*" Categoria: gestiona
+Administrador o-- "0..*" SolucionLimpieza: gestiona
+Administrador o-- "0..*" Sustancia: gestiona
+Administrador o-- "0..*" Material: gestiona
+
+
+%% Notas
+note for Material "Clase base para Tela y Superficie (JOINED)"
+note for Sustancia "Clase abstracta común para manchas e ingredientes"
+note for SolucionLimpieza "Incluye pasos, ingredientes y advertencias"
+note for UsuarioBase "Jerarquía de usuarios: Usuario y Admin"
+note for Sustancia "JOINED Strategy - Padre de TipoMancha e Ingrediente"
+note for Material "JOINED Strategy - Padre de Tela y Superficie"
+note for SolucionLimpieza "Una solución sirve para múltiples manchas y materiales"
+note for TipoMancha "Ejemplo: 'Vino Tinto' puede tener 5 soluciones diferentes"
+note for Material "Ejemplo: 'Algodón' puede tener soluciones para 10 tipos de mancha"
+note for Ingrediente "Ejemplo: 'Bicarbonato' se usa en múltiples soluciones"
+note for Precaudiones "lista de Precauciones para cada sustancia, Ejemplo: 'No mezclar con lejía'"

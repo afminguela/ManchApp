@@ -1,181 +1,107 @@
 # ManchApp
-“Convertir la eliminación de manchas en un proceso sencillo, rápido y hasta divertido, ofreciendo soluciones prácticas, ecológicas y personalizadas, hechas por madres para madres y adultos jóvenes en su camino de Adulting 101.”
 
-´´´´mermaid
+**Purpose:**
+Make stain removal a simple, quick, and even fun process, offering practical, ecological, and personalized solutions, designed for mothers and young adults on their Adulting 101 journey.
 
-classDiagram
-    %% PRIMERA HERENCIA - Sustancia como clase padre
-    class Sustancia {
-        <<abstract>>
-        -Long id
-        -String nombre
-        -String descripcion
-        -String tipoSustancia
-        -String color
-        -boolean toxico
-        -boolean natural
-        -PeligrosidadNivel peligrosidad
-        -LocalDateTime fechaCreacion
-        +getId() Long
-        +getNombre() String
-        +getDescripcion() String
-        +isToxico() boolean
-        +isNatural() boolean
-    }
+---
 
-    class TipoMancha {
-        -String categoriaMancha
-        -String origen
-        -DificultadLimpieza dificultadLimpieza
-        -boolean urgente
-        -boolean seFijaConCalor
-        -Double phAproximado
-        -Integer tiempoSecadoHoras
-        +getCategoriaMancha() String
-        +getOrigen() String
-        +getDificultadLimpieza() DificultadLimpieza
-        +isUrgente() boolean
-        +isSeFijaConCalor() boolean
-    }
+## Class Diagram
 
-    class Ingrediente {
-        -String tipoIngrediente
-        -BigDecimal phValor
-        -BigDecimal concentracionMaxima
-        -Integer tiempoContactoMaxMinutos
-        -BigDecimal precioAproximado
-        -boolean disponibleSupermercado
-        -boolean requiereVentilacion
-        -boolean compatibleConAgua
-        -EstadoFisico estadoFisico
-        -String temperaturaAlmacenamiento
-        +getTipoIngrediente() String
-        +getPhValor() BigDecimal
-        +getEstadoFisico() EstadoFisico
-        +isDisponibleSupermercado() boolean
-        +isRequiereVentilacion() boolean
-    }
+The project uses JPA inheritance and models such as `Sustancia` (abstract parent), `TipoMancha` (child), `Ingrediente` (child), `Material` (parent), `Tela` (child), and `Superficie` (child). You can find the full class diagram in the file: `Doc/diagramaPost.mmd`.
 
-    %% SEGUNDA HERENCIA - Material como clase padre
-    class Material {
-        <<abstract>>
-        -Long id
-        -String nombre
-        -String descripcion
-        -boolean delicado
-        -LocalDateTime fechaCreacion
-        +getId() Long
-        +getNombre() String
-        +getDescripcion() String
-        +isDelicado() boolean
-    }
+---
 
-    class Tela {
-        -String tipoFibra
-        -boolean lavableMaquina
-        -String cuidadosEspeciales
-        -int temperaturaMaxima
-        -boolean secadoAire
-        +getTipoFibra() String
-        +isLavableMaquina() boolean
-        +getCuidadosEspeciales() String
-        +getTemperaturaMaxima() int
-        +isSecadoAire() boolean
-    }
+## Setup
 
-    class Superficie {
-        -String tipoSuperficie
-        -boolean resistenteAgua
-        -String acabado
-        -boolean poroso
-        +getTipoSuperficie() String
-        +isResistenteAgua() boolean
-        +getAcabado() String
-        +isPoroso() boolean
-    }
+1. Clone the repository from GitHub.
+2. Configure your MySQL database in `src/main/resources/application.properties`.
+3. Build the project using Maven:
+   `./mvnw clean install`
+4. Run the application:
+   `./mvnw spring-boot:run`
 
-    %% Entidad principal de soluciones
-    class SolucionLimpieza {
-        -Long id
-        -String titulo
-        -String instrucciones
-        -Integer tiempoMinutos
-        -DificultadAplicacion dificultadAplicacion
-        -Integer efectividad
-        -String advertencias
-        -String consejos
-        -boolean casero
-        -boolean requiereVentilacion
-        -boolean seguroParaNiños
-        -LocalDateTime fechaCreacion
-        +getId() Long
-        +getTitulo() String
-        +getInstrucciones() String
-        +getEfectividad() Integer
-        +isCasero() boolean
-        +isRequiereVentilacion() boolean
-    }
+---
 
-    %% Entidad de usuarios (para autenticación)
-    class Usuario {
-        -Long id
-        -String username
-        -String email
-        -String password
-        -String nombre
-        -String apellidos
-        -boolean activo
-        -LocalDateTime fechaRegistro
-        +getId() Long
-        +getUsername() String
-        +getEmail() String
-        +isActivo() boolean
-    }
+## Technologies Used
 
-    %% Entidad de favoritos del usuario
-    class SolucionFavorita {
-        -Long id
-        -String notas
-        -LocalDateTime fechaGuardado
-        -boolean probado
-        -Integer valoracion
-        +getId() Long
-        +getNotas() String
-        +isProbado() boolean
-        +getValoracion() Integer
-    }
+- Java 17+
+- Spring Boot
+- Spring Data JPA
+- MySQL
+- Maven
 
-    %% Entidad de categorías para mejor organización
-    class Categoria {
-        -Long id
-        -String nombre
-        -String descripcion
-        -String icono
-        -String color
-        +getId() Long
-        +getNombre() String
-        +getIcono() String
-    }
+---
 
-    %% RELACIONES DE HERENCIA
-    Sustancia <|-- TipoMancha
-    Sustancia <|-- Ingrediente
-    Material <|-- Tela
-    Material <|-- Superficie
+## Controllers and Routes Structure
 
-    %% RELACIONES ENTRE ENTIDADES
-    TipoMancha ||--o{ SolucionLimpieza : "tiene soluciones"
-    Material ||--o{ SolucionLimpieza : "se aplica en"
-    SolucionLimpieza }o--o{ Ingrediente : "contiene"
-    Ingrediente }o--o{ Ingrediente : "incompatible con"
-    Usuario ||--o{ SolucionFavorita : "guarda"
-    SolucionLimpieza ||--o{ SolucionFavorita : "es guardada"
-    Categoria ||--o{ TipoMancha : "categoriza"
+- REST API controllers are located in `src/main/java/com/adulting101/ManchApp/controllers/`.
+- Example route:
+  - `GET /soluciones` (returns cleaning solutions, supports filtering by stain and material)
+- Models and DTOs are in `src/main/java/com/adulting101/ManchApp/models/` and `src/main/java/com/adulting101/ManchApp/DTO/`.
 
-    %% ANOTACIONES
-    note for Sustancia "Estrategia JOINED - Clase padre para TipoMancha e Ingrediente"
-    note for Material "Estrategia JOINED - Clase padre para Tela y Superficie"
-    note for SolucionLimpieza "Ahora relacionada con múltiples ingredientes"
-    note for Ingrediente "Nueva entidad: vinagre, bicarbonato, detergente, etc."
+---
 
-    ´´´´
+## Folder Structure
+
+- `src/main/java/com/adulting101/ManchApp/`
+  - `controllers/` (REST controllers)
+  - `models/` (JPA entities)
+  - `repositories/` (Spring Data repositories)
+  - `services/` (business logic)
+  - `DTO/` (data transfer objects)
+  - `enums/` (enumerations)
+  - `config/` (configuration classes)
+  - `utils/` (utility classes)
+- `src/main/resources/`
+  - `application.properties` (database and app config)
+  - `static/` and `templates/` (if needed for web resources)
+- `test/` (unit and integration tests)
+
+---
+
+## Comments and Code Quality
+
+- The code uses clear naming conventions and is organized by feature.
+- Comments are present where necessary for clarity.
+
+---
+
+## Documentation
+
+- Class diagrams:
+  - `Doc/diagramaPost.mmd`
+  - `Doc/Class diagrams.mmd`
+- ER diagram:
+  - `Doc/ER diagram ManchApp.mmd`
+- Project structure PDF:
+  - `Doc/Estructura del Proyecto ManchaFácil.pdf`
+
+---
+
+## Deliverables
+
+- A working REST API running locally.
+- GitHub repository: [ManchApp GitHub](https://github.com/afminguela/ManchApp.git)
+- Class diagram included in the repository.
+- Documentation files in the `Doc/` folder.
+
+---
+
+## Team Members
+
+- See contributors in the GitHub repository.
+
+---
+
+## Future Work
+
+- Add more CRUD routes (POST, PUT/PATCH, DELETE).
+- Implement robust error handling.
+- Add unit and integration tests.
+- Optionally, add authentication with Spring Security.
+
+---
+
+## Resources
+
+- All resources and diagrams are included in the `Doc/` folder.
