@@ -109,7 +109,6 @@ public class DataLoader implements CommandLineRunner {
         aceite.setTipoSustancia("natural");
         aceite.setOrigenMancha("Cocina o talleres");
         aceite.setDificultadLimpieza(Nivel.LOW);
-
         aceite.setPeligrosidad(Nivel.NONE);
         tipoManchaRepository.save(aceite);
 
@@ -117,10 +116,9 @@ public class DataLoader implements CommandLineRunner {
         tinta.setNombre("Tinta");
         tinta.setTipoSustancia("quimica");
         tinta.setDescripcion("Mancha de boli o pluma");
-        tinta.setCategoriaMancha(Categoria.POLVO);
+        tinta.setCategoriaMancha(Categoria.Liquido);
         tinta.setOrigenMancha("Material de oficina");
         tinta.setDificultadLimpieza(Nivel.HIGH);
-
         tinta.setPeligrosidad(Nivel.NONE);
         tipoManchaRepository.save(tinta);
 

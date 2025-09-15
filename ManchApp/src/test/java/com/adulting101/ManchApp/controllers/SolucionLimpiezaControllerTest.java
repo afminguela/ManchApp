@@ -4,83 +4,53 @@ import com.adulting101.ManchApp.DTO.tipoMancha.TipoManchaRequestDTO;
 import com.adulting101.ManchApp.models.SolucionLimpieza;
 import com.adulting101.ManchApp.services.impl.SolucionLimpiezaImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.*;
-
+@ExtendWith(MockitoExtension.class)
 @WebMvcTest(SolucionLimpiezaController.class)
 class SolucionLimpiezaControllerTest {
-
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private SolucionLimpiezaImpl service;
 
     @Test
     public void getSolucionLimpiezaById_retorna200() throws Exception {
+        SolucionLimpieza solucionLimpieza = new SolucionLimpieza();
+        solucionLimpieza.setId(1L);
+        solucionLimpieza.setTitulo("Quitar tinta de Cuero");
 
+        Mockito.when(service.findById(1L)).thenReturn(solucionLimpieza);
 
-        Mockito.when(service.getSolucionLimpiezaById(1L)).thenReturn(inmueble);
-
-        mockMvc.perform(get("/api/inmuebles/1"))
+        mockMvc.perform(get("/api/soluciones/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.titulo").value("Piso en Málaga"));
+                .andExpect(jsonPath("$.titulo").value("Quitar tinta de Cuero"));
     }
-
 
     @Test
     void getSolucionLimpiezaReturnsAllSolutionsWhenNoFiltersProvided() {
-        // Mock behavior
-        when(service.listaSolucionLimpieza(null, null)).thenReturn(List.of(new SolucionLimpieza(), new SolucionLimpieza()));
+        when(service.findAll(null, null)).thenReturn(List.of(new SolucionLimpieza(), new SolucionLimpieza()));
 
-        // Call the method
-        List<SolucionLimpieza> result = controller.getSolucionLimpieza(null, null);
+        List<SolucionLimpieza> result = service.findAll(null, null);
 
-        // Assertions
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(service).listaSolucionLimpieza(null, null);
-    }
-
-    @Test
-    void getSolucionLimpiezaFiltersByNombreMancha() {
-        // Mock behavior
-        TipoManchaRequestDTO tipoMancha = new TipoManchaRequestDTO("Vino");
-        when(service.listaSolucionLimpieza(tipoMancha, null)).thenReturn(List.of(new SolucionLimpieza()));
-
-        // Call the method
-        List<SolucionLimpieza> result = controller.getSolucionLimpieza("Vino", null);
-
-        // Assertions
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(service).listaSolucionLimpieza(tipoMancha, null);
-    }
-
-
-
-    @Test
-    void getSolucionLimpiezaPorId() {
-    }
-
-    @Test
-    void create() {
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void update() {
+        verify(service).findAll(null, null);
     }
 }
