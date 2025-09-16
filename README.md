@@ -38,6 +38,11 @@ The project uses JPA inheritance and models such as `Sustancia` (abstract parent
 - Example route:
   - `GET /soluciones` (returns cleaning solutions, supports filtering by stain and material)
 - Models and DTOs are in `src/main/java/com/adulting101/ManchApp/models/` and `src/main/java/com/adulting101/ManchApp/DTO/`.
+- Repositories are in `src/main/java/com/adulting101/ManchApp/repositories/`.
+- Services are in `src/main/java/com/adulting101/ManchApp/services/`.
+- Enums are in `src/main/java/com/adulting101/ManchApp/enums/`.
+- Configuration classes are in `src/main/java/com/adulting101/ManchApp/config/`.
+  - Utility classes are in `src/main/java/com/adulting101/ManchApp/utils/`. 
 
 ---
 
@@ -59,10 +64,10 @@ The project uses JPA inheritance and models such as `Sustancia` (abstract parent
 
 ---
 
-## Comments and Code Quality
+## Swagger Integration
 
-- The code uses clear naming conventions and is organized by feature.
-- Comments are present where necessary for clarity.
+- Swagger is integrated for API documentation.
+- Access the Swagger UI at: `http://localhost:8080/swagger-ui.html` (after running the application).
 
 ---
 
@@ -87,11 +92,6 @@ The project uses JPA inheritance and models such as `Sustancia` (abstract parent
 
 ---
 
-## Team Members
-
-- See contributors in the GitHub repository.
-
----
 
 ## Future Work
 
