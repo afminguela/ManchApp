@@ -6,6 +6,6 @@ public enum Categoria {
     StainSolver,
     Desmanchificador3000,
     POLVO,
-    ROPA, HOGAR, Liquido,
+    ROPA, HOGAR, Liquido, ORGANICA, ALIMENTO,
 
 }
