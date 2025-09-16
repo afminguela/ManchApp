@@ -78,8 +78,8 @@ La API REST está organizada siguiendo las mejores prácticas de Spring Boot.
 ## 🔗 Enlaces Extra
 
 
--   **Presentación del Proyecto:** `[Enlace a tus diapositivas]` (Añade aquí tu enlace)
--   **Acceso a Swagger UI:**  `http://localhost:8080/swagger-ui.html` (after running the application).
+-   **Presentación del Proyecto:** `https://gamma.app/docs/8de5wyitk81uyu3?following_id=3o66zdtykakuznq&follow_on_start=true` (Gamma)
+-   **Acceso a Swagger UI:**  `http://localhost:8080/swagger-ui.html` (despues de complilar la api).
 
 ---
 
