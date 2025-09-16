@@ -31,6 +31,7 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private TelaRepository telaRepository;
 
+
     @Autowired
     private SolucionFavoritaRepository solucionFavoritaRepository;
 
