@@ -22,7 +22,7 @@ public class OpenApiConfig {
                         .title("ManchApp API")
                         .version("v1")
                         .description("API de ManchApp: consulta, crea y gestiona soluciones para eliminar manchas en diferentes materiales y superficies. Documentación generada automáticamente para facilitar la integración y el desarrollo front.")
-                        .contact(new Contact().name("Ana Minguela").email("afminguela@gmail.com"))
+                        .contact(new Contact().name("Ana Fernandez Minguela").email("afminguela@gmail.com"))
                         .license(new License().name("MIT"))
                 );
         // Si en el futuro usas JWT, descomenta esto:
