@@ -1,107 +1,102 @@
-# ManchApp
+# ManchApp 🧼✨
 
-**Purpose:**
-Make stain removal a simple, quick, and even fun process, offering practical, ecological, and personalized solutions, designed for mothers and young adults on their Adulting 101 journey.
+## 🎯 Descripción del Proyecto
 
----
+**ManchApp** es una API REST desarrollada con Spring Boot, diseñada para hacer que la eliminación de manchas sea un proceso simple, rápido e incluso divertido. Nuestro objetivo es ofrecer soluciones de limpieza prácticas, ecológicas y personalizadas, pensadas especialmente para madres y jóvenes adultos en su viaje de "Adulting 101".
 
-## Class Diagram
-
-The project uses JPA inheritance and models such as `Sustancia` (abstract parent), `TipoMancha` (child), `Ingrediente` (child), `Material` (parent), `Tela` (child), and `Superficie` (child). You can find the full class diagram in the file: `Doc/diagramaPost.mmd`.
+Con ManchApp, puedes obtener recomendaciones de limpieza filtrando por el tipo de mancha y el material afectado, haciendo que el cuidado de la ropa y las superficies del hogar sea más fácil que nunca.
 
 ---
 
-## Setup
+## 🎨 Diagrama de Clases
 
-1. Clone the repository from GitHub.
-2. Configure your MySQL database in `src/main/resources/application.properties`.
-3. Build the project using Maven:
-   `./mvnw clean install`
-4. Run the application:
-   `./mvnw spring-boot:run`
+El diseño del proyecto se basa en herencia JPA para modelar las diferentes entidades de nuestro dominio. Las clases principales incluyen:
 
----
+- **`Sustancia`**: Clase padre abstracta.
+- **`TipoMancha`**: Entidad hija que representa tipos específicos de manchas.
+- **`Ingrediente`**: Entidad hija que representa los ingredientes para las soluciones.
+- **`Material`**: Clase padre para los materiales que se pueden manchar.
+- **`Tela`**: Entidad hija para tipos de tela.
+- **`Superficie`**: Entidad hija para tipos de superficie.
 
-## Technologies Used
-
-- Java 17+
-- Spring Boot
-- Spring Data JPA
-- MySQL
-- Maven
+Puedes encontrar los diagramas de clases y el diagrama Entidad-Relación en la carpeta `Doc/` del repositorio:
+- **Diagrama de Clases:** `Doc/Class diagrams.mmd`
+- **Diagrama ER:** `Doc/ER diagram ManchApp.mmd`
 
 ---
 
-## Controllers and Routes Structure
+## 🚀 Instalación y Puesta en Marcha (Setup)
 
-- REST API controllers are located in `src/main/java/com/adulting101/ManchApp/controllers/`.
-- Example route:
-  - `GET /soluciones` (returns cleaning solutions, supports filtering by stain and material)
-- Models and DTOs are in `src/main/java/com/adulting101/ManchApp/models/` and `src/main/java/com/adulting101/ManchApp/DTO/`.
-- Repositories are in `src/main/java/com/adulting101/ManchApp/repositories/`.
-- Services are in `src/main/java/com/adulting101/ManchApp/services/`.
-- Enums are in `src/main/java/com/adulting101/ManchApp/enums/`.
-- Configuration classes are in `src/main/java/com/adulting101/ManchApp/config/`.
-  - Utility classes are in `src/main/java/com/adulting101/ManchApp/utils/`. 
+Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local:
 
----
+1.  **Clona el repositorio desde GitHub:**
+    ```bash
+    git clone https://github.com/afminguela/ManchApp.git
+    cd ManchApp
+    ```
 
-## Folder Structure
+2.  **Configura tu base de datos MySQL:**
+    -   Abre el archivo `src/main/resources/application.properties`.
+    -   Modifica las propiedades `spring.datasource.url`, `spring.datasource.username` y `spring.datasource.password` con los datos de tu base de datos local.
 
-- `src/main/java/com/adulting101/ManchApp/`
-  - `controllers/` (REST controllers)
-  - `models/` (JPA entities)
-  - `repositories/` (Spring Data repositories)
-  - `services/` (business logic)
-  - `DTO/` (data transfer objects)
-  - `enums/` (enumerations)
-  - `config/` (configuration classes)
-  - `utils/` (utility classes)
-- `src/main/resources/`
-  - `application.properties` (database and app config)
-  - `static/` and `templates/` (if needed for web resources)
-- `test/` (unit and integration tests)
+3.  **Construye el proyecto con Maven:**
+    ```bash
+    ./mvnw clean install
+    ```
+
+4.  **Ejecuta la aplicación:**
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+La API estará disponible en `http://localhost:8080`.
 
 ---
 
-## Swagger Integration
+## 🛠️ Tecnologías Utilizadas
 
-- Swagger is integrated for API documentation.
-- Access the Swagger UI at: `http://localhost:8080/swagger-ui.html` (after running the application).
+-   **Backend:** Java 17+, Spring Boot
+-   **Base de Datos:** Spring Data JPA, MySQL
+-   **Gestión de Dependencias:** Maven
+-   **Documentación API:** Swagger
+-   **Apoyo en Debugging y documentacion** Claude Sonnet4, Gamma, Perplexity
+-   **IDE y otros SW** IntelliJ, Postman
+---
+
+## 📁 Estructura de Rutas y Controladores
+
+La API REST está organizada siguiendo las mejores prácticas de Spring Boot.
+
+-   **Controladores:** Se encuentran en `src/main/java/com/adulting101/ManchApp/controllers/`.
+-   **Ruta de ejemplo:**
+    -   `GET /soluciones`: Devuelve una lista de soluciones de limpieza. Soporta filtrado por tipo de mancha y material a través de parámetros de consulta (por ejemplo, `GET /soluciones?tipoMancha=vino&material=algodon`).
+-   **Documentación de la API con Swagger:**
+    -   Una vez que la aplicación está en ejecución, puedes acceder a la interfaz de Swagger UI para ver y probar todos los endpoints disponibles:
+    -   **URL de Swagger:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ---
 
-## Documentation
+## 🔗 Enlaces Extra
 
-- Class diagrams:
-  - `Doc/diagramaPost.mmd`
-  - `Doc/Class diagrams.mmd`
-- ER diagram:
-  - `Doc/ER diagram ManchApp.mmd`
-- Project structure PDF:
-  - `Doc/Estructura del Proyecto ManchaFácil.pdf`
+
+-   **Presentación del Proyecto:** `[Enlace a tus diapositivas]` (Añade aquí tu enlace)
+-   **Acceso a Swagger UI:**  `http://localhost:8080/swagger-ui.html` (after running the application).
 
 ---
 
-## Deliverables
+## 🔮 Trabajo Futuro (Future Work)
 
-- A working REST API running locally.
+-   [ ] **Crear un sistema de Usuarios** que tenga diversos roles: user, admin...
+-   [ ] **Implementar rutas CRUD completas** (POST, PUT/PATCH, DELETE) para todas las entidades para que desde admin se pueda modificar la BBDD.
+-   [ ] **Diferentes nivels de filtro** para poder seleccionar antes de la consultas que nos devuelva solo soluciones ECO.
+-   [ ] **Implementar autenticación y seguridad** utilizando Spring Security y JWT.
+
+---
+
+## 📚 Recursos
+
+Toda la documentación adicional, diagramas y recursos del proyecto se encuentran en la carpeta `/Doc`.
+
 - GitHub repository: [ManchApp GitHub](https://github.com/afminguela/ManchApp.git)
-- Class diagram included in the repository.
-- Documentation files in the `Doc/` folder.
-
----
 
 
-## Future Work
 
-- Add more CRUD routes (POST, PUT/PATCH, DELETE).
-- Implement robust error handling.
-- Add unit and integration tests.
-- Optionally, add authentication with Spring Security.
-
----
-
-## Resources
-
-- All resources and diagrams are included in the `Doc/` folder.
