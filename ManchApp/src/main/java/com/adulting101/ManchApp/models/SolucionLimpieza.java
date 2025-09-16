@@ -56,6 +56,7 @@ public class SolucionLimpieza {
             joinColumns = @JoinColumn(name = "solucion_id"),
             inverseJoinColumns = @JoinColumn(name = "precaudiones_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Precauciones> advertencias;
 
     private String consejos;
@@ -68,6 +69,7 @@ public class SolucionLimpieza {
             joinColumns = @JoinColumn(name = "solucion_id"),
             inverseJoinColumns = @JoinColumn(name = "material_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Material> materiales;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -76,6 +78,7 @@ public class SolucionLimpieza {
             joinColumns = @JoinColumn(name = "solucion_id"),
             inverseJoinColumns = @JoinColumn(name = "mancha_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<TipoMancha> manchas;
 
     @ManyToMany
@@ -84,6 +87,7 @@ public class SolucionLimpieza {
             joinColumns = @JoinColumn(name = "ingredientes_id"),
             inverseJoinColumns = @JoinColumn(name = "solucion_limpieza_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Ingrediente> ingredientes;
 
     @ManyToMany
@@ -92,6 +96,6 @@ public class SolucionLimpieza {
             joinColumns = @JoinColumn(name = "solucion_limpieza_id"),
             inverseJoinColumns = @JoinColumn(name = "utensilios_id")
     )
-    @JsonManagedReference
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Utensilio> utensilios;
 }

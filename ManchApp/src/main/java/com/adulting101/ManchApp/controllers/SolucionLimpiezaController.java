@@ -100,12 +100,12 @@ public class SolucionLimpiezaController {
     @PatchMapping("/{id}")
     public SolucionLimpieza update(
             @Parameter(description = "ID de la solución de limpieza a actualizar", example = "1")
-            @PathVariable Long Id,
+            @PathVariable("id") Long id,
             @Parameter(description = "Objeto solución de limpieza con los cambios", required = true)
             @RequestBody SolucionLimpieza solucionLimpieza ) {
-        SolucionLimpieza updated = service.update(Id, solucionLimpieza);
+        SolucionLimpieza updated = service.update(id, solucionLimpieza);
         if (updated == null) {
-            throw new ResourceNotFoundException("No se puede actualizar. Solución de limpieza no encontrada con id: " + Id);
+            throw new ResourceNotFoundException("No se puede actualizar. Solución de limpieza no encontrada con id: " + id);
         }
         return updated;
     }

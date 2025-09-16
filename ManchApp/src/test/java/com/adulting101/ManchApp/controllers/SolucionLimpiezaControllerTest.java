@@ -83,8 +83,9 @@ class SolucionLimpiezaControllerTest {
     void getSolucionLimpiezaPorId_notFound() throws Exception {
         when(service.findById(99L)).thenReturn(null);
         mockMvc.perform(get("/api/soluciones/99"))
-                .andExpect(status().isOk()) // Cambia a .isNotFound() si tu controlador lanza 404
-                .andExpect(content().string(""));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.message").exists());
     }
 
     @Test
@@ -92,9 +93,13 @@ class SolucionLimpiezaControllerTest {
     void createSolucionLimpieza() throws Exception {
         SolucionLimpieza nueva = new SolucionLimpieza();
         nueva.setTitulo("Nueva Solución");
+        nueva.setInstrucciones("Instrucciones de prueba");
+        nueva.setTiempoMinutos(5);
         SolucionLimpieza guardada = new SolucionLimpieza();
         guardada.setId(10L);
         guardada.setTitulo("Nueva Solución");
+        guardada.setInstrucciones("Instrucciones de prueba");
+        guardada.setTiempoMinutos(5);
         when(service.create(any(SolucionLimpieza.class))).thenReturn(guardada);
 
         mockMvc.perform(post("/api/soluciones")
@@ -124,10 +129,14 @@ class SolucionLimpiezaControllerTest {
         SolucionLimpieza actualizada = new SolucionLimpieza();
         actualizada.setId(3L);
         actualizada.setTitulo("Actualizada");
+        actualizada.setInstrucciones("Instrucciones actualizadas");
+        actualizada.setTiempoMinutos(10);
         when(service.update(eq(3L), any(SolucionLimpieza.class))).thenReturn(actualizada);
 
         SolucionLimpieza cambios = new SolucionLimpieza();
         cambios.setTitulo("Actualizada");
+        cambios.setInstrucciones("Instrucciones actualizadas");
+        cambios.setTiempoMinutos(10);
 
         mockMvc.perform(patch("/api/soluciones/3")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -136,4 +145,3 @@ class SolucionLimpiezaControllerTest {
                 .andExpect(jsonPath("$.titulo").value("Actualizada"));
     }
 }
-

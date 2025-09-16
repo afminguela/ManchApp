@@ -29,7 +29,7 @@ public class Utensilio {
     public String descripcion;
 
     @ManyToMany(mappedBy = "utensilios")
-    @JsonBackReference
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<SolucionLimpieza> solucionesLimpieza ;
 
 
