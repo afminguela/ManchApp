@@ -390,14 +390,14 @@ public class DataLoader implements CommandLineRunner {
         // Soluciones de limpieza ------------------------------
         SolucionLimpieza solucion1 = new SolucionLimpieza();
         solucion1.setTitulo("Quitar vino tinto de algodón");
-        solucion1.setInstrucciones("Mezclar bicarbonato y vinagre, aplicar sobre la mancha, dejar actuar 10 minutos y enjuagar. ");
+        solucion1.setInstrucciones("Espolvorear sal sobre la mancha fresca, dejar absorber unos minutos, retirar la sal, enjuagar con agua fría y lavar con detergente suave.");
         solucion1.setTiempoMinutos(15);
         solucion1.setDificultad(Nivel.LOW);
-        solucion1.setEfectividad(Nivel.LOW);
+        solucion1.setEfectividad(Nivel.HIGH);
         solucion1.setAdvertencias(Arrays.asList(precaucion1));
-        solucion1.setConsejos("No dejar secar la mancha antes de limpiar. ");
+        solucion1.setConsejos("No dejar secar la mancha antes de limpiar. Si la mancha persiste, aplicar agua oxigenada diluida.");
         solucion1.setCategoria(Categoria.ROPA);
-        solucion1.setIngredientes(Arrays.asList(bicarbonato, vinagre));
+        solucion1.setIngredientes(Arrays.asList(sal, detergente));
         solucion1.setManchas(Arrays.asList(vino));
         solucion1.setMateriales(Arrays.asList(algodon));
         solucion1.setUtensilios(Arrays.asList(esponja, trapo));
