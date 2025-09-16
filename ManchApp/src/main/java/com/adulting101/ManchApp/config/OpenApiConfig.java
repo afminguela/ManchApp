@@ -21,8 +21,8 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("ManchApp API")
                         .version("v1")
-                        .description("Api de resolución de manchas).")
-                        .contact(new Contact().name("Ana").email("afminguela@gmail.com"))
+                        .description("API de ManchApp: consulta, crea y gestiona soluciones para eliminar manchas en diferentes materiales y superficies. Documentación generada automáticamente para facilitar la integración y el desarrollo front.")
+                        .contact(new Contact().name("Ana Minguela").email("afminguela@gmail.com"))
                         .license(new License().name("MIT"))
                 );
         // Si en el futuro usas JWT, descomenta esto:
@@ -35,7 +35,7 @@ public class OpenApiConfig {
 
 
     @Bean
-    public GroupedOpenApi SolucionLimpieza() {
+    public GroupedOpenApi solucionLimpiezaGroup() {
         return GroupedOpenApi.builder()
                 .group("solucion_limpieza")
                 .pathsToMatch("/api/soluciones/**")
